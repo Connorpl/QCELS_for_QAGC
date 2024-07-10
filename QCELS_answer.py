@@ -142,7 +142,7 @@ def fit(x_points,y_points):
     print("fit1: ",x_best)
 
     p0 = np.array([x_best[0],x_best[1],1-x_best[0],0.*x_best[1]])
-    result2 = least_squares(residual_func2,p0,args=(y_points,x_points),bounds=([0.,-np.inf,0.,-0.8*abs(x_best[1])],[1,0.,abs(x_best[0]),0.8*abs(x_best[1])]))
+    result2 = least_squares(residual_func2,p0,args=(y_points,x_points),bounds=([0.,-np.inf,0.,-0.8*abs(x_best[1])-eps],[1,0.,abs(x_best[0])+eps,0.8*abs(x_best[1])+eps]))
     print(result2.x,result2.cost)
 
     p0 = np.array([x_best[0],x_best[1],1-x_best[0],0.5*x_best[1],0.5*result2.x[3]])
