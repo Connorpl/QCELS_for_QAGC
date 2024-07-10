@@ -127,6 +127,8 @@ def residual_func3(params,y,x):
     diff = [model_func3(x[k],r,theta,r2,theta2,theta3) - y[k] for k in range(len(x))]
     return [k.real**2 + k.imag**2 for k in diff]
 
+eps = 1e-5
+
 def fit(x_points,y_points):
     res_x=[]
     res_cost=[]
@@ -144,7 +146,7 @@ def fit(x_points,y_points):
     print(result2.x,result2.cost)
 
     p0 = np.array([x_best[0],x_best[1],1-x_best[0],0.5*x_best[1],0.5*result2.x[3]])
-    result3 = least_squares(residual_func3,p0,args=(y_points,x_points),bounds=([0.,-np.inf,0.,-0.8*abs(x_best[1]),-0.8*abs(result2.x[3])],[1,0.,abs(x_best[0]),0.8*abs(x_best[1]),0.8*abs(result2.x[3])]))
+    result3 = least_squares(residual_func3,p0,args=(y_points,x_points),bounds=([0.,-np.inf,0.,-0.8*abs(x_best[1])-eps,-0.8*abs(result2.x[3])-eps],[1,0.,abs(x_best[0])+eps,0.8*abs(x_best[1])+eps,0.8*abs(result2.x[3])+eps]))
     print(result3.x,result3.cost)
     return result3.x[1]
 
